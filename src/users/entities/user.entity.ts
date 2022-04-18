@@ -3,6 +3,7 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
+  Generated,
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
@@ -12,9 +13,10 @@ import { Ticket } from 'src/tickets/entities/ticket.entity';
 @Entity()
 @ObjectType()
 export class User {
-  @PrimaryGeneratedColumn()
-  @Field((type) => Int)
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  @Generated('uuid')
+  @Field()
+  id: string;
 
   @Column()
   @Field()
@@ -23,6 +25,12 @@ export class User {
   @Column()
   @Field()
   last_name: string;
+
+  @Column()
+  @Field()
+  username: string;
+
+
 
   @Column()
   @Field()

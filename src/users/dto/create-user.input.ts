@@ -11,6 +11,10 @@ export class CreateUserInput {
   @Field()
   last_name: string;
 
+  @IsAlpha()
+  @Field()
+  username: string;
+
   @IsEmail()
   @Field()
   email: string;
