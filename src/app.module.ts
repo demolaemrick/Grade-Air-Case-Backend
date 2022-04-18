@@ -15,6 +15,7 @@ import { TicketsModule } from './tickets/tickets.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+    
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: ':memory:',

@@ -37,7 +37,9 @@ export class Plane {
   // @Field()
   // arrival_airport: string;
 
-  // @OneToMany(() => Ticket, ticket => ticket.plane)
-  // @Field((type) => [Ticket], { nullable: true })
-  // tickets?: Ticket[];
+  @OneToMany(() => Ticket, ticket => ticket.plane, {
+    createForeignKeyConstraints: false,
+  })
+  @Field((type) => [Ticket], { nullable: true })
+  tickets?: Ticket[];
 }

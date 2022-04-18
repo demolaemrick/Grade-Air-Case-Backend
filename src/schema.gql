@@ -2,12 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Plane {
+  id: Int!
+  model_number: Int!
+  plane_name: String!
+  plane_number: Int!
+  tickets: [Ticket!]
+}
+
 type Ticket {
   id: Int!
   title: String!
   description: String!
   ownerId: Int!
   owner: User
+  planeId: Int!
+  plane: Plane
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -27,19 +37,12 @@ type User {
   updatedAt: DateTime!
 }
 
-type Plane {
-  id: Int!
-  model_number: Int!
-  plane_name: String!
-  plane_number: Int!
-  tickets: Ticket!
-}
-
 type Query {
   users: [User!]!
   planes: [Plane!]!
   plane(id: Int!): Plane!
   tickets: [Ticket!]!
+  ticketsByPlaneId(planeId: Int!): [Ticket!]!
   getTicket(id: Int!): Ticket!
 }
 
@@ -62,10 +65,10 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
-  id: Int!
   first_name: String
   last_name: String
   email: String
+  id: Int!
 }
 
 input CreatePlaneInput {
@@ -85,11 +88,13 @@ input CreateTicketInput {
   title: String!
   description: String!
   ownerId: Int!
+  planeId: Int!
 }
 
 input UpdateTicketInput {
   title: String
   description: String
   ownerId: Int
+  planeId: Int
   id: Int!
 }

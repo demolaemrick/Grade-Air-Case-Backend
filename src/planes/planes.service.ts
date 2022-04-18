@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { CreatePlaneInput } from './dto/create-plane.input';
 import { UpdatePlaneInput } from './dto/update-plane.input';
 import { Plane } from './entities/plane.entity';
@@ -12,6 +12,7 @@ export class PlanesService {
   constructor(
     @InjectRepository(Plane)
     private readonly planeRepository: Repository<Plane>,
+    @Inject(forwardRef(() => TicketsService))
     private readonly ticketsService: TicketsService,
   ) {}
 
@@ -47,7 +48,7 @@ export class PlanesService {
   }
 
   //    GET PLANE TICKETS
-  async getPlaneTickets(planeId: number): Promise<Ticket> {
-    return this.ticketsService.findOne(planeId);
+  async getPlaneTickets(planeId: number): Promise<Ticket[]> {
+    return this.ticketsService.findPlaneTickets(planeId);
   }
 }
