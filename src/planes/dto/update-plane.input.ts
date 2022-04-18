@@ -1,17 +1,26 @@
 import { CreatePlaneInput } from './create-plane.input';
-import { InputType, Field, Int, PartialType, GraphQLISODateTime } from '@nestjs/graphql';
+import { InputType, Field, PartialType } from '@nestjs/graphql';
+import { IsAlpha, IsString } from 'class-validator';
+
 
 @InputType()
 export class UpdatePlaneInput extends PartialType(CreatePlaneInput) {
   @Field()
   id: string;
 
-  // @Field((type) => GraphQLISODateTime)
-  // departure_time: Date;
+  @IsString()
+  @Field()
+  departure_time: string;
 
-  // @Field((type) => GraphQLISODateTime)
-  // arrival_time: Date;
+  @IsString()
+  @Field()
+  arrival_time: string;
 
-  // @Field()
-  // departure_airport: string;
+  @IsAlpha()
+  @Field()
+  departure_airport: string;
+
+  @IsAlpha()
+  @Field()
+  arrival_airport: string;
 }

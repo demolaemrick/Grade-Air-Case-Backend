@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, GraphQLISODateTime } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Entity,PrimaryGeneratedColumn,Generated, Column, OneToMany } from 'typeorm';
 import {Ticket} from "src/tickets/entities/ticket.entity"
 
@@ -22,21 +22,21 @@ export class Plane {
   @Field(type => Int)
   plane_number: number;
 
-  // @Column()
-  // @Field((type) => GraphQLISODateTime)
-  // departure_time: Date;
+  @Column({nullable:true})
+  @Field({nullable:true})
+  departure_time: Date;
 
-  // @Column()
-  // @Field((type) => GraphQLISODateTime)
-  // arrival_time: Date;
+  @Column({nullable:true})
+  @Field({nullable:true})
+  arrival_time: Date;
 
-  // @Column()
-  // @Field()
-  // departure_airport: string;
+  @Column({nullable:true})
+  @Field({nullable:true})
+  departure_airport: string;
 
-  // @Column()
-  // @Field()
-  // arrival_airport: string;
+  @Column({nullable:true})
+  @Field({nullable:true})
+  arrival_airport: string;
 
   @OneToMany(() => Ticket, ticket => ticket.plane, {
     createForeignKeyConstraints: false,
