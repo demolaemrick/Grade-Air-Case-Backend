@@ -7,8 +7,15 @@ type Plane {
   model_number: Int!
   plane_name: String!
   plane_number: Int!
+  departure_time: Date
+  arrival_time: Date
+  departure_airport: String
+  arrival_airport: String
   tickets: [Ticket!]
 }
+
+"""Date custom scalar type"""
+scalar Date
 
 type Ticket {
   id: String!
@@ -85,6 +92,10 @@ input UpdatePlaneInput {
   plane_name: String
   plane_number: Int
   id: String!
+  departure_time: String!
+  arrival_time: String!
+  departure_airport: String!
+  arrival_airport: String!
 }
 
 input CreateTicketInput {
