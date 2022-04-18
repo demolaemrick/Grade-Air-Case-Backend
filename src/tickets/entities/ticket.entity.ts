@@ -8,7 +8,7 @@ import {
   OneToOne,
   ManyToOne
 } from 'typeorm';
-import { User } from 'src/users/user.entity';
+import { User } from 'src/users/entities/user.entity';
 import { Plane } from 'src/planes/entities/plane.entity';
 
 @Entity()
@@ -35,13 +35,16 @@ export class Ticket {
   @Field((type) => User, { nullable: true })
   owner?: User;
 
-  // @Column()
-  // @Field(type => Int)
-  // planeId: number;
+  @Column()
+  @Field(type => Int)
+  planeId: number;
 
-  // @ManyToOne(() => Plane, plane => plane.tickets)
-  // @Field((type) => Plane, {nullable: true})
-  // plane?: Plane;
+  @ManyToOne(() => Plane, plane => plane.tickets, {
+    onDelete: 'CASCADE',
+    // createForeignKeyConstraints: false,
+  })
+  @Field((type) => Plane, {nullable: true})
+  plane?: Plane;
 
   @CreateDateColumn()
   @Field((type) => GraphQLISODateTime)

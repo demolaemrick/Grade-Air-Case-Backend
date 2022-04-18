@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateTicketInput } from './dto/create-ticket.input';
 import { UpdateTicketInput } from './dto/update-ticket.input';
 import { Ticket } from './entities/ticket.entity';
-import { User } from 'src/users/user.entity';
+import { User } from 'src/users/entities/user.entity';
+import { Plane } from 'src/planes/entities/plane.entity';
 import { UsersService } from 'src/users/users.service';
+import { PlanesService } from 'src/planes/planes.service';
 
 @Injectable()
 export class TicketsService {
@@ -13,6 +15,8 @@ export class TicketsService {
     @InjectRepository(Ticket)
     private readonly ticketRepository: Repository<Ticket>,
     private readonly userService: UsersService,
+    @Inject(forwardRef(() => PlanesService))
+    private readonly planesService: PlanesService,
   ) {}
 
   //    CREATE TICKET
@@ -20,10 +24,21 @@ export class TicketsService {
     const newTicket = await this.ticketRepository.create(createTicketInput);
     return this.ticketRepository.save(newTicket);
   }
-
-  //    READ TICKET
+  //   READ TICKETS
   async findAll(): Promise<Ticket[]> {
-    return this.ticketRepository.find();
+    return this.ticketRepository.find({
+      relations: ['plane'],
+    });
+  }
+
+  //    GET TICKET ASSOCIATED PLANE
+  async findPlaneTickets(planeId): Promise<Ticket[]> {
+    return this.ticketRepository.find({
+      where: {
+        planeId,
+      },
+      relations: ['plane'],
+    });
   }
   //   READ TICKET BY ID
   async findOne(id: number): Promise<Ticket> {
@@ -51,5 +66,10 @@ export class TicketsService {
   // TICKET OWNER
   async getTicketOwner(ownerId: number): Promise<User> {
     return this.userService.findOne(ownerId);
+  }
+
+  //   GET TICKET ASSOCIATED PLANE
+  async getTicketPlane(planeId: number): Promise<Plane> {
+    return this.planesService.findOne(planeId);
   }
 }

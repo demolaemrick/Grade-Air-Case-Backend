@@ -9,7 +9,8 @@ import {
 } from '@nestjs/graphql';
 import { TicketsService } from './tickets.service';
 import { Ticket } from './entities/ticket.entity';
-import { User } from 'src/users/user.entity';
+import { User } from 'src/users/entities/user.entity';
+import { Plane } from 'src/planes/entities/plane.entity';
 import { CreateTicketInput } from './dto/create-ticket.input';
 import { UpdateTicketInput } from './dto/update-ticket.input';
 
@@ -29,14 +30,16 @@ export class TicketsResolver {
     return this.ticketsService.findAll();
   }
 
+  // returns tickets that are associated with a particular plane
+  @Query(() => [Ticket])
+  ticketsByPlaneId(@Args('planeId', { type: () => Int }) id: number) {
+    return this.ticketsService.findPlaneTickets(id);
+  }
+
+  
   @Query(() => Ticket)
   getTicket(@Args('id', { type: () => Int }) id: number) {
     return this.ticketsService.findOne(id);
-  }
-
-  @ResolveField(returns => User)
-  owner(@Parent() ticket: Ticket) {
-    return this.ticketsService.getTicketOwner(ticket.ownerId);
   }
 
   @Mutation(() => Ticket)
@@ -49,5 +52,16 @@ export class TicketsResolver {
   @Mutation(() => Ticket)
   removeTicket(@Args('id', { type: () => Int }) id: number) {
     return this.ticketsService.remove(id);
+  }
+
+
+  @ResolveField((returns) => User)
+  owner(@Parent() ticket: Ticket) {
+    return this.ticketsService.getTicketOwner(ticket.ownerId);
+  }
+
+  @ResolveField((returns) => Plane)
+  plane(@Parent() ticket: Ticket) {
+    return this.ticketsService.getTicketPlane(ticket.planeId);
   }
 }

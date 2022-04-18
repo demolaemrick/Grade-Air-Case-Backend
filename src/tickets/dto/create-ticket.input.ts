@@ -11,6 +11,6 @@ export class CreateTicketInput {
   @Field((type) => Int)
   ownerId: number;
 
-  // @Field((type) => Int)
-  // planeId: number;
+  @Field((type) => Int)
+  planeId: number;
 }
