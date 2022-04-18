@@ -1,13 +1,14 @@
 import { ObjectType, Field, Int, GraphQLISODateTime } from '@nestjs/graphql';
-import { Entity,PrimaryGeneratedColumn,Column, OneToMany } from 'typeorm';
+import { Entity,PrimaryGeneratedColumn,Generated, Column, OneToMany } from 'typeorm';
 import {Ticket} from "src/tickets/entities/ticket.entity"
 
 @Entity()
 @ObjectType()
 export class Plane {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  @Generated('uuid')
+  @Field()
+  id: string;
 
   @Column()
   @Field(type => Int)

@@ -3,14 +3,12 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 @InputType()
 export class CreateTicketInput {
   @Field()
-  title: string;
+  name: string;
+
 
   @Field()
-  description: string;
+  ownerId: string;
 
-  @Field((type) => Int)
-  ownerId: number;
-
-  @Field((type) => Int)
-  planeId: number;
+  @Field()
+  planeId: string;
 }

@@ -3,8 +3,8 @@ import { InputType, Field, Int, PartialType, GraphQLISODateTime } from '@nestjs/
 
 @InputType()
 export class UpdatePlaneInput extends PartialType(CreatePlaneInput) {
-  @Field(() => Int)
-  id: number;
+  @Field()
+  id: string;
 
   // @Field((type) => GraphQLISODateTime)
   // departure_time: Date;

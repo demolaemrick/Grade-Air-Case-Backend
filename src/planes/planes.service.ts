@@ -28,13 +28,13 @@ export class PlanesService {
   }
 
   // FIND PLANE BY ID
-  async findOne(id: number) {
+  async findOne(id: string) {
     return this.planeRepository.findOneOrFail(id);
   }
 
   //   UPDATE PLANE
-  async update(id: number, updatePlaneInput: UpdatePlaneInput) {
-    const planeToUpdate = await this.planeRepository.findOneOrFail(id);
+  async update( updatePlaneInput: UpdatePlaneInput) {
+    const planeToUpdate = await this.planeRepository.findOneOrFail(updatePlaneInput.id);
     return this.planeRepository.save({
       ...planeToUpdate,
       ...updatePlaneInput,
@@ -42,13 +42,13 @@ export class PlanesService {
   }
 
   //   DELETE PLANE
-  async remove(id: number): Promise<Plane> {
+  async remove(id: string): Promise<Plane> {
     const planeToUpdate = await this.planeRepository.findOneOrFail(id);
     return this.planeRepository.remove(planeToUpdate);
   }
 
   //    GET PLANE TICKETS
-  async getPlaneTickets(planeId: number): Promise<Ticket[]> {
+  async getPlaneTickets(planeId: string): Promise<Ticket[]> {
     return this.ticketsService.findPlaneTickets(planeId);
   }
 }

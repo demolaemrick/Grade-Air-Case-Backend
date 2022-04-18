@@ -31,7 +31,7 @@ export class PlanesResolver {
 
   //   GET PLANE BY ID
   @Query(() => Plane, { name: 'plane' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.planesService.findOne(id);
   }
 
@@ -43,12 +43,12 @@ export class PlanesResolver {
   //   UPDATE PLANE
   @Mutation(() => Plane)
   updatePlane(@Args('updatePlaneInput') updatePlaneInput: UpdatePlaneInput) {
-    return this.planesService.update(updatePlaneInput.id, updatePlaneInput);
+    return this.planesService.update(updatePlaneInput);
   }
 
   //   DELETE PLANE
   @Mutation(() => Plane)
-  removePlane(@Args('id', { type: () => Int }) id: number) {
+  removePlane(@Args('id', { type: () => String }) id: string) {
     return this.planesService.remove(id);
   }
 }

@@ -3,10 +3,12 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
+  Generated,
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
-  ManyToOne
+  ManyToOne,
+  BeforeInsert,
 } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Plane } from 'src/planes/entities/plane.entity';
@@ -14,37 +16,41 @@ import { Plane } from 'src/planes/entities/plane.entity';
 @Entity()
 @ObjectType()
 export class Ticket {
-  @PrimaryGeneratedColumn()
-  @Field((type) => Int)
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  @Generated('uuid')
+  @Field()
+  id: string;
 
   @Column()
   @Field()
-  title: string;
+  name: string;
 
   @Column()
   @Field()
-  description: string;
+  ownerId: string;
 
-
-  @Column()
-  @Field(type => Int)
-  ownerId: number;
-
-  @OneToOne(() => User, user => user.ticket)
+  @OneToOne(() => User, (user) => user.ticket, { onDelete: 'CASCADE' })
   @Field((type) => User, { nullable: true })
   owner?: User;
 
   @Column()
-  @Field(type => Int)
-  planeId: number;
+  @Field()
+  planeId: string;
 
-  @ManyToOne(() => Plane, plane => plane.tickets, {
+  @ManyToOne(() => Plane, (plane) => plane.tickets, {
     onDelete: 'CASCADE',
-    // createForeignKeyConstraints: false,
   })
-  @Field((type) => Plane, {nullable: true})
+  @Field((type) => Plane, { nullable: true })
   plane?: Plane;
+
+  @Column()
+  @Field()
+  isBooked: boolean;
+
+  @BeforeInsert()
+  updateHodApproved() {
+    this.isBooked = false;
+  }
 
   @CreateDateColumn()
   @Field((type) => GraphQLISODateTime)

@@ -47,10 +47,9 @@ export class TicketsService {
 
   //    UPDATE TICKET
   async update(
-    id: number,
     updateTicketInput: UpdateTicketInput,
   ): Promise<Ticket> {
-    const ticketToUpdate = await this.ticketRepository.findOneOrFail(id);
+    const ticketToUpdate = await this.ticketRepository.findOneOrFail(updateTicketInput.id);
     return this.ticketRepository.save({
       ...ticketToUpdate,
       ...updateTicketInput,
@@ -58,18 +57,18 @@ export class TicketsService {
   }
 
   //   DELETE TICKET
-  async remove(id: number): Promise<Ticket> {
+  async remove(id: string): Promise<Ticket> {
     const ticketToUpdate = await this.ticketRepository.findOneOrFail(id);
     return this.ticketRepository.remove(ticketToUpdate);
   }
 
   // TICKET OWNER
-  async getTicketOwner(ownerId: number): Promise<User> {
+  async getTicketOwner(ownerId: string): Promise<User> {
     return this.userService.findOne(ownerId);
   }
 
   //   GET TICKET ASSOCIATED PLANE
-  async getTicketPlane(planeId: number): Promise<Plane> {
+  async getTicketPlane(planeId: string): Promise<Plane> {
     return this.planesService.findOne(planeId);
   }
 }

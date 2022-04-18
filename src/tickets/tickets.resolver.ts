@@ -32,11 +32,10 @@ export class TicketsResolver {
 
   // returns tickets that are associated with a particular plane
   @Query(() => [Ticket])
-  ticketsByPlaneId(@Args('planeId', { type: () => Int }) id: number) {
+  ticketsByPlaneId(@Args('planeId', { type: () => String }) id: string) {
     return this.ticketsService.findPlaneTickets(id);
   }
 
-  
   @Query(() => Ticket)
   getTicket(@Args('id', { type: () => Int }) id: number) {
     return this.ticketsService.findOne(id);
@@ -46,14 +45,13 @@ export class TicketsResolver {
   updateTicket(
     @Args('updateTicketInput') updateTicketInput: UpdateTicketInput,
   ) {
-    return this.ticketsService.update(updateTicketInput.id, updateTicketInput);
+    return this.ticketsService.update(updateTicketInput);
   }
 
   @Mutation(() => Ticket)
-  removeTicket(@Args('id', { type: () => Int }) id: number) {
+  removeTicket(@Args('id', { type: () => String }) id: string) {
     return this.ticketsService.remove(id);
   }
-
 
   @ResolveField((returns) => User)
   owner(@Parent() ticket: Ticket) {

@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type Plane {
-  id: Int!
+  id: String!
   model_number: Int!
   plane_name: String!
   plane_number: Int!
@@ -11,13 +11,13 @@ type Plane {
 }
 
 type Ticket {
-  id: Int!
-  title: String!
-  description: String!
-  ownerId: Int!
+  id: String!
+  name: String!
+  ownerId: String!
   owner: User
-  planeId: Int!
+  planeId: String!
   plane: Plane
+  isBooked: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -28,9 +28,10 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type User {
-  id: Int!
+  id: String!
   first_name: String!
   last_name: String!
+  username: String!
   email: String!
   ticket: Ticket
   createdAt: DateTime!
@@ -40,35 +41,37 @@ type User {
 type Query {
   users: [User!]!
   planes: [Plane!]!
-  plane(id: Int!): Plane!
+  plane(id: String!): Plane!
   tickets: [Ticket!]!
-  ticketsByPlaneId(planeId: Int!): [Ticket!]!
+  ticketsByPlaneId(planeId: String!): [Ticket!]!
   getTicket(id: Int!): Ticket!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
-  deleteUser(id: Int!): User!
+  deleteUser(id: String!): User!
   createPlane(createPlaneInput: CreatePlaneInput!): Plane!
   updatePlane(updatePlaneInput: UpdatePlaneInput!): Plane!
-  removePlane(id: Int!): Plane!
+  removePlane(id: String!): Plane!
   createTicket(createTicketInput: CreateTicketInput!): Ticket!
   updateTicket(updateTicketInput: UpdateTicketInput!): Ticket!
-  removeTicket(id: Int!): Ticket!
+  removeTicket(id: String!): Ticket!
 }
 
 input CreateUserInput {
   first_name: String!
   last_name: String!
+  username: String!
   email: String!
 }
 
 input UpdateUserInput {
   first_name: String
   last_name: String
+  username: String
   email: String
-  id: Int!
+  id: String!
 }
 
 input CreatePlaneInput {
@@ -81,20 +84,19 @@ input UpdatePlaneInput {
   model_number: Int
   plane_name: String
   plane_number: Int
-  id: Int!
+  id: String!
 }
 
 input CreateTicketInput {
-  title: String!
-  description: String!
-  ownerId: Int!
-  planeId: Int!
+  name: String!
+  ownerId: String!
+  planeId: String!
 }
 
 input UpdateTicketInput {
-  title: String
-  description: String
-  ownerId: Int
-  planeId: Int
-  id: Int!
+  name: String
+  ownerId: String
+  planeId: String
+  id: String!
+  isBooked: Boolean!
 }
