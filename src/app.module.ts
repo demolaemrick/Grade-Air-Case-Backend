@@ -18,8 +18,8 @@ import { TicketsModule } from './tickets/tickets.module';
     
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: ':memory:',
-      entities: ['dist/**/*.entity{.ts,.js}'],
+      database: 'ticket-system',
+      entities: [__dirname + '/**/*.entity.{ts,js}'],
       synchronize: true,
     }),
     UsersModule,
