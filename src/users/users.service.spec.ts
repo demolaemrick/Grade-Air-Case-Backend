@@ -8,6 +8,15 @@ type MockType<T> = {
   [P in keyof T]?: jest.Mock<{}>;
 };
 
+const mockUser: User = {
+  id: 'bhfu-ghtu-123b',
+  first_name: 'John',
+  last_name: 'Doe',
+  username: 'john',
+  email: 'john.doe@email.com',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
 describe('UsersService', () => {
   let service: UsersService;
   const userRepositoryMock: MockType<Repository<User>> = {
@@ -52,71 +61,42 @@ describe('UsersService', () => {
   });
 
   describe('findAll', () => {
-    it('should return all users', async () => {
-      const user = {
-        id: 'bhfu-ghtu-123b',
-        first_name: 'John',
-        last_name: 'Doe',
-        username: 'john',
-        email: 'john.doe@email.com',
-      };
-      userRepositoryMock.find.mockReturnValue([user]);
+    it('should return all users', async () => {     
+      userRepositoryMock.find.mockReturnValue([mockUser]);
       const users = await service.findAll();
-      expect(users).toEqual([user]);
+      expect(users).toEqual([mockUser]);
       expect(userRepositoryMock.find).toHaveBeenCalled();
     });
   });
 
   describe('findOne', () => {
     it('should return a user with a particular id', async () => {
-      const user = {
-        id: 'bhfu-ghtu-123b',
-        first_name: 'John',
-        last_name: 'Doe',
-        username: 'john',
-        email: 'john.doe@email.com',
-      };
+    
       const id: string = 'bhfu-ghtu-123b';
 
-      userRepositoryMock.findOne.mockReturnValue(user);
-      await service.findOne(user.id);
-      expect(userRepositoryMock.findOneOrFail).toHaveBeenCalledWith(user.id);
+      userRepositoryMock.findOne.mockReturnValue(mockUser);
+      await service.findOne(mockUser.id);
+      expect(userRepositoryMock.findOneOrFail).toHaveBeenCalledWith(mockUser.id);
     });
   });
 
   describe('update', () => {
-    it('should update a user with a particular id', async () => {
-      const userUpdateDto = {
-        id: 'bhfu-ghtu-123b',
-        first_name: 'John',
-        last_name: 'Doe',
-        username: 'john',
-        email: 'john.doe@email.com',
-      };
-
-      userRepositoryMock.update.mockReturnValue(userUpdateDto);
-      const updatedUser = await service.update(userUpdateDto);
-      expect(updatedUser).toMatchObject(userUpdateDto);
+    it('should update a user with a particular id', async () => {   
+      userRepositoryMock.update.mockReturnValue(mockUser);
+      const updatedUser = await service.update(mockUser);
+      expect(updatedUser).toMatchObject(mockUser);
       expect(userRepositoryMock.findOneOrFail).toHaveBeenCalledWith(
-        userUpdateDto.id,
+        mockUser.id,
       );
-      expect(userRepositoryMock.save).toHaveBeenCalledWith(userUpdateDto);
+      expect(userRepositoryMock.save).toHaveBeenCalledWith(mockUser);
     });
   });
 
   describe('delete', () => {
     it('should delete a user', async () => {
-      const user = {
-        id: 'bhfu-ghtu-123b',
-        first_name: 'John',
-        last_name: 'Doe',
-        username: 'john',
-        email: 'john.doe@email.com',
-      };
-
-      userRepositoryMock.delete.mockReturnValue(user);
-      await service.delete(user.id);
-      expect(userRepositoryMock.findOneOrFail).toHaveBeenCalledWith(user.id);
+      userRepositoryMock.delete.mockReturnValue(mockUser);
+      await service.delete(mockUser.id);
+      expect(userRepositoryMock.findOneOrFail).toHaveBeenCalledWith(mockUser.id);
     });
   });
 });

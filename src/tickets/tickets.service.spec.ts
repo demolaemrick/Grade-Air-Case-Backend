@@ -45,6 +45,17 @@ const planeServiceMock = {
   delete: jest.fn((id: string): Plane => mockPlane),
 };
 
+const mockTicket: Ticket = {
+  id: 'bb13-6cc-900b',
+  name: 'Emirate ticket',
+  ownerId: 'bhfu-ghtu-123b',
+  planeId: 'cd12-123b-02c',
+  isBooked: false,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  updateIsBooked: () => {},
+};
+
 describe('TicketsService', () => {
   let service: TicketsService;
   const ticketRepositoryMock: MockType<Repository<Ticket>> = {
@@ -99,71 +110,41 @@ describe('TicketsService', () => {
 
   describe('findAll', () => {
     it('should return all tickets', async () => {
-      const ticket = {
-        id: 'bb13-6cc-900b',
-        name: 'Emirate ticket',
-        ownerId: 'bhfu-ghtu-123b',
-        planeId: 'cd12-123b-02c',
-        isBooked: false,
-      };
-      ticketRepositoryMock.find.mockReturnValue([ticket]);
+      ticketRepositoryMock.find.mockReturnValue([mockTicket]);
       const tickets = await service.findAll();
-      expect(tickets).toEqual([ticket]);
+      expect(tickets).toEqual([mockTicket]);
       expect(ticketRepositoryMock.find).toHaveBeenCalled();
     });
   });
 
   describe('findOne', () => {
     it('should return a user with a particular id', async () => {
-      const ticket = {
-        id: 'bb13-6cc-900b',
-        name: 'Emirate ticket',
-        ownerId: 'bhfu-ghtu-123b',
-        planeId: 'cd12-123b-02c',
-        isBooked: false,
-      };
-      ticketRepositoryMock.findOne.mockReturnValue(ticket);
-      await service.findOne(ticket.id);
+      ticketRepositoryMock.findOne.mockReturnValue(mockTicket);
+      await service.findOne(mockTicket.id);
       expect(ticketRepositoryMock.findOneOrFail).toHaveBeenCalledWith(
-        ticket.id,
+        mockTicket.id,
       );
     });
   });
 
   describe('update', () => {
     it('should update a user with a particular id', async () => {
-      const ticket = {
-        id: 'bb13-6cc-900b',
-        name: 'Emirate ticket',
-        ownerId: 'bhfu-ghtu-123b',
-        planeId: 'cd12-123b-02c',
-        isBooked: false,
-      };
-
-      ticketRepositoryMock.update.mockReturnValue(ticket);
-      const updatedTicket = await service.update(ticket);
-      expect(updatedTicket).toMatchObject(ticket);
+      ticketRepositoryMock.update.mockReturnValue(mockTicket);
+      const updatedTicket = await service.update(mockTicket);
+      expect(updatedTicket).toMatchObject(mockTicket);
       expect(ticketRepositoryMock.findOneOrFail).toHaveBeenCalledWith(
-        ticket.id,
+        mockTicket.id,
       );
-      expect(ticketRepositoryMock.save).toHaveBeenCalledWith(ticket);
+      expect(ticketRepositoryMock.save).toHaveBeenCalledWith(mockTicket);
     });
   });
 
   describe('delete', () => {
     it('should delete a user', async () => {
-      const ticket = {
-        id: 'bb13-6cc-900b',
-        name: 'Emirate ticket',
-        ownerId: 'bhfu-ghtu-123b',
-        planeId: 'cd12-123b-02c',
-        isBooked: false,
-      };
-
-      ticketRepositoryMock.delete.mockReturnValue(ticket);
-      await service.remove(ticket.id);
+      ticketRepositoryMock.delete.mockReturnValue(mockTicket);
+      await service.remove(mockTicket.id);
       expect(ticketRepositoryMock.findOneOrFail).toHaveBeenCalledWith(
-        ticket.id,
+        mockTicket.id,
       );
     });
   });

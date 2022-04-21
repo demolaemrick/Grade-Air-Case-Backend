@@ -71,16 +71,9 @@ describe('PlanesResolver', () => {
     resolver.updatePlane(planeDto);
     expect(planeServiceMock.update).toHaveBeenCalledWith(planeDto);
   });
-  it('should delete plane', () => {
-    const plane = {
-      id: 'bb13-6cc-900b',
-      plane_name: 'EmirateFC',
-      plane_number: 234,
-      departure_airport: "Abidabi",
-      arrival_airport: "Muritala",      
-    };
-    const deletedPlane = resolver.removePlane(plane.id);
-    expect(deletedPlane).toMatchObject(plane);
-    expect(planeServiceMock.remove).toHaveBeenCalledWith(plane.id);
+  it('should delete plane', () => {   
+    const deletedPlane = resolver.removePlane(mockPlane.id);
+    expect(deletedPlane).toMatchObject(mockPlane);
+    expect(planeServiceMock.remove).toHaveBeenCalledWith(mockPlane.id);
   });
 });

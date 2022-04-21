@@ -28,6 +28,16 @@ const ticketServiceMock = {
   delete: jest.fn((id: string): Ticket => mockTicket),
 };
 
+const mockPlane: Plane = {
+  id: 'bb13-6cc-900b',
+  plane_name: 'EmirateFC',
+  plane_number: 234,
+  departure_airport: 'Abidabi',
+  arrival_airport: 'Muritala',
+  departure_time: new Date(),
+  arrival_time: new Date(),
+};
+
 describe('PlanesService', () => {
   let service: PlanesService;
   const planeRepositoryMock: MockType<Repository<Plane>> = {
@@ -65,7 +75,7 @@ describe('PlanesService', () => {
     it('should create a new plane', async () => {
       const planeDto = {
         plane_name: 'EmirateFC',
-        plane_number: 234
+        plane_number: 234,
       };
       planeRepositoryMock.create.mockReturnValue(planeDto);
       const newplane = await service.create(planeDto);
@@ -76,38 +86,18 @@ describe('PlanesService', () => {
 
   describe('findAll', () => {
     it('should return all planes', async () => {
-      const planeDto = {
-        id: 'bb13-6cc-900b',
-        plane_name: 'EmirateFC',
-        plane_number: 234,
-        departure_airport: "Abidabi",
-        arrival_airport: "Muritala",
-        departure_time: new Date(),
-        arrival_time: new Date()
-      };
-      planeRepositoryMock.find.mockReturnValue([planeDto]);
+      planeRepositoryMock.find.mockReturnValue([mockPlane]);
       const planes = await service.findAll();
-      expect(planes).toEqual([planeDto]);
+      expect(planes).toEqual([mockPlane]);
       expect(planeRepositoryMock.find).toHaveBeenCalled();
     });
   });
 
   describe('findOne', () => {
     it('should return a user with a particular id', async () => {
-      const plane = {
-        id: 'bb13-6cc-900b',
-        plane_name: 'EmirateFC',
-        plane_number: 234,
-        departure_airport: "Abidabi",
-        arrival_airport: "Muritala",
-        departure_time: new Date(),
-        arrival_time: new Date()
-      };
-      planeRepositoryMock.findOne.mockReturnValue(plane);
-      await service.findOne(plane.id);
-      expect(planeRepositoryMock.findOneOrFail).toHaveBeenCalledWith(
-        plane.id,
-      );
+      planeRepositoryMock.findOne.mockReturnValue(mockPlane);
+      await service.findOne(mockPlane.id);
+      expect(planeRepositoryMock.findOneOrFail).toHaveBeenCalledWith(mockPlane.id);
     });
   });
 
@@ -117,10 +107,10 @@ describe('PlanesService', () => {
         id: 'bb13-6cc-900b',
         plane_name: 'EmirateFC',
         plane_number: 234,
-        departure_airport: "Abidabi",
-        arrival_airport: "Muritala",
-        departure_time: "2022-11-29",
-        arrival_time: "2022-12-1"
+        departure_airport: 'Abidabi',
+        arrival_airport: 'Muritala',
+        departure_time: "2022-04-20T18:40:40.488Z",
+        arrival_time: "2022-04-20T18:40:40.488Z"
       };
 
       planeRepositoryMock.update.mockReturnValue(planeDto);
@@ -135,21 +125,9 @@ describe('PlanesService', () => {
 
   describe('delete', () => {
     it('should delete a user', async () => {
-      const plane = {
-        id: 'bb13-6cc-900b',
-        plane_name: 'EmirateFC',
-        plane_number: 234,
-        departure_airport: "Abidabi",
-        arrival_airport: "Muritala",
-        departure_time: new Date(),
-        arrival_time: new Date()
-      };
-
-      planeRepositoryMock.delete.mockReturnValue(plane);
-      await service.remove(plane.id);
-      expect(planeRepositoryMock.findOneOrFail).toHaveBeenCalledWith(
-        plane.id,
-      );
+      planeRepositoryMock.delete.mockReturnValue(mockPlane);
+      await service.remove(mockPlane.id);
+      expect(planeRepositoryMock.findOneOrFail).toHaveBeenCalledWith(mockPlane.id);
     });
   });
 });

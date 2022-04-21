@@ -21,6 +21,7 @@ const userServiceMock = {
   delete: jest.fn((id: string): User => mockUser),
 };
 
+
 describe('UsersResolver', () => {
   let resolver: UsersResolver;
 
@@ -56,33 +57,19 @@ describe('UsersResolver', () => {
       username: 'john',
       email: 'john.doe@email.com',
     };
-    const user = resolver.createUser(userDto);
-    expect(user).toMatchObject(userDto);
+    const newUser = resolver.createUser(userDto);
+    expect(newUser).toMatchObject(userDto);
     expect(userServiceMock.create).toHaveBeenCalledWith(userDto);
   });
 
-  it('should update a  user', () => {
-    const userDto = {
-      id: 'bhfu-ghtu-123b',
-      first_name: 'John',
-      last_name: 'Doe',
-      username: 'john',
-      email: 'john.doe@email.com',
-    };
-    const user = resolver.updateUser(userDto);
-    expect(user).toMatchObject(userDto);
-    expect(userServiceMock.update).toHaveBeenCalledWith(userDto);
+  it('should update a  user', () => {    
+    const updatedUser = resolver.updateUser(mockUser);
+    expect(updatedUser).toMatchObject(mockUser);
+    expect(userServiceMock.update).toHaveBeenCalledWith(mockUser);
   });
-  it('should delete a  user', () => {
-    const user = {
-      id: 'bhfu-ghtu-123b',
-      first_name: 'John',
-      last_name: 'Doe',
-      username: 'john',
-      email: 'john.doe@email.com',
-    };
-    const deletedUser = resolver.deleteUser(user.id);
-    expect(deletedUser).toMatchObject(user);
-    expect(userServiceMock.delete).toHaveBeenCalledWith(user.id);
+  it('should delete a  user', () => {    
+    const deletedUser = resolver.deleteUser(mockUser.id);
+    expect(deletedUser).toMatchObject(mockUser);
+    expect(userServiceMock.delete).toHaveBeenCalledWith(mockUser.id);
   });
 });

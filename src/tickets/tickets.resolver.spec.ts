@@ -61,27 +61,13 @@ describe('TicketsResolver', () => {
   });
 
   it('should update a ticket', () => {
-    const ticketDto = {
-      id: 'bb13-6cc-900b',
-      name: 'Emirate ticket',
-      ownerId: 'bhfu-ghtu-123b',
-      planeId: 'cd12-123b-02c',
-      isBooked: false,
-    };
-    const ticket = resolver.updateTicket(ticketDto);
-    expect(ticket).toMatchObject(ticketDto);
-    expect(ticketServiceMock.update).toHaveBeenCalledWith(ticketDto);
+    const ticket = resolver.updateTicket(mockTicket);
+    expect(ticket).toMatchObject(mockTicket);
+    expect(ticketServiceMock.update).toHaveBeenCalledWith(mockTicket);
   });
   it('should delete a ticket', () => {
-    const ticket = {
-      id: 'bb13-6cc-900b',
-      name: 'Emirate ticket',
-      ownerId: 'bhfu-ghtu-123b',
-      planeId: 'cd12-123b-02c',
-      isBooked: false,
-    };
-    const deletedTicket = resolver.removeTicket(ticket.id);
-    expect(deletedTicket).toMatchObject(ticket);
-    expect(ticketServiceMock.remove).toHaveBeenCalledWith(ticket.id);
+    const deletedTicket = resolver.removeTicket(mockTicket.id);
+    expect(deletedTicket).toMatchObject(mockTicket);
+    expect(ticketServiceMock.remove).toHaveBeenCalledWith(mockTicket.id);
   });
 });
