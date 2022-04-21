@@ -2,9 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { AppController } from './app.controller';
 import { join } from 'path';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { PlanesModule } from './planes/planes.module';
 import { TicketsModule } from './tickets/tickets.module';
@@ -26,7 +24,6 @@ import { TicketsModule } from './tickets/tickets.module';
     PlanesModule,
     TicketsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+
 })
 export class AppModule {}
