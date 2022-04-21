@@ -4,7 +4,6 @@
 
 type Plane {
   id: String!
-  model_number: Int!
   plane_name: String!
   plane_number: Int!
   departure_time: Date
@@ -51,7 +50,7 @@ type Query {
   plane(id: String!): Plane!
   tickets: [Ticket!]!
   ticketsByPlaneId(planeId: String!): [Ticket!]!
-  getTicket(id: Int!): Ticket!
+  getTicket(id: String!): Ticket!
 }
 
 type Mutation {
@@ -82,13 +81,11 @@ input UpdateUserInput {
 }
 
 input CreatePlaneInput {
-  model_number: Int!
   plane_name: String!
   plane_number: Int!
 }
 
 input UpdatePlaneInput {
-  model_number: Int
   plane_name: String
   plane_number: Int
   id: String!

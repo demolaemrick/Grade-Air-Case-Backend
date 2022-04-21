@@ -4,8 +4,8 @@ import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { CreatePlaneInput } from './dto/create-plane.input';
 import { UpdatePlaneInput } from './dto/update-plane.input';
 import { Plane } from './entities/plane.entity';
-import { Ticket } from 'src/tickets/entities/ticket.entity';
-import { TicketsService } from 'src/tickets/tickets.service';
+import { Ticket } from '../tickets/entities/ticket.entity';
+import { TicketsService } from '../tickets/tickets.service';
 
 @Injectable()
 export class PlanesService {

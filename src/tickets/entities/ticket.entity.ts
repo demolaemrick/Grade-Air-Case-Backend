@@ -10,8 +10,8 @@ import {
   ManyToOne,
   BeforeInsert,
 } from 'typeorm';
-import { User } from 'src/users/entities/user.entity';
-import { Plane } from 'src/planes/entities/plane.entity';
+import { User } from "../../users/entities/user.entity"
+import { Plane } from '../../planes/entities/plane.entity';
 
 @Entity()
 @ObjectType()
@@ -48,7 +48,7 @@ export class Ticket {
   isBooked: boolean;
 
   @BeforeInsert()
-  updateHodApproved() {
+  updateIsBooked() {
     this.isBooked = false;
   }
 

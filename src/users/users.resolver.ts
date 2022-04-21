@@ -18,7 +18,7 @@ export class UsersResolver {
     return this.usersService.create(createUserInput);
   }
 
-  //    READ USER
+  //    READ USERS
   @Query((returns) => [User])
   users(): Promise<User[]> {
     return this.usersService.findAll();

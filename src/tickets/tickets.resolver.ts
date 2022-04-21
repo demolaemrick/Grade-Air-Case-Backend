@@ -3,7 +3,6 @@ import {
   Query,
   Mutation,
   Args,
-  Int,
   Parent,
   ResolveField,
 } from '@nestjs/graphql';
@@ -37,7 +36,7 @@ export class TicketsResolver {
   }
 
   @Query(() => Ticket)
-  getTicket(@Args('id', { type: () => Int }) id: number) {
+  getTicket(@Args('id', { type: () => String }) id: string) {
     return this.ticketsService.findOne(id);
   }
 

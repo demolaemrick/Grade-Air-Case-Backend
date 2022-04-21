@@ -6,8 +6,8 @@ import { UpdateTicketInput } from './dto/update-ticket.input';
 import { Ticket } from './entities/ticket.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Plane } from 'src/planes/entities/plane.entity';
-import { UsersService } from 'src/users/users.service';
-import { PlanesService } from 'src/planes/planes.service';
+import { UsersService } from '../users/users.service';
+import { PlanesService } from "../planes/planes.service";
 
 @Injectable()
 export class TicketsService {
@@ -41,7 +41,7 @@ export class TicketsService {
     });
   }
   //   READ TICKET BY ID
-  async findOne(id: number): Promise<Ticket> {
+  async findOne(id: string): Promise<Ticket> {
     return this.ticketRepository.findOneOrFail(id);
   }
 
