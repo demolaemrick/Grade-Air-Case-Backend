@@ -1,4 +1,4 @@
-import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
 import {
   Entity,
   Column,
@@ -18,7 +18,7 @@ import { Plane } from '../../planes/entities/plane.entity';
 export class Ticket {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')
-  @Field()
+  @Field(type => ID)
   id: string;
 
   @Column()
@@ -49,7 +49,7 @@ export class Ticket {
 
   @BeforeInsert()
   updateIsBooked() {
-    this.isBooked = false;
+    this.isBooked = true;
   }
 
   @CreateDateColumn()

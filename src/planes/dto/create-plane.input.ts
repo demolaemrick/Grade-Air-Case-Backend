@@ -1,10 +1,10 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { IsAlpha, IsInt } from 'class-validator';
+import { Length, IsInt } from 'class-validator';
 
 
 @InputType()
 export class CreatePlaneInput {
-  @IsAlpha()
+  @Length(3, 20)
   @Field()
   plane_name: string;
 

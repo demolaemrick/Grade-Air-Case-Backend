@@ -1,4 +1,4 @@
-import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ID, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
 import {
   Entity,
   Column,
@@ -10,12 +10,12 @@ import {
 } from 'typeorm';
 import { Ticket } from '../../tickets/entities/ticket.entity';
 
-@Entity()
+@Entity("users")
 @ObjectType()
 export class User {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')
-  @Field()
+  @Field(type => ID)
   id: string;
 
   @Column()

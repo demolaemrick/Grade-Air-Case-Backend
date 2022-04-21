@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -13,7 +13,7 @@ import { Ticket } from '../../tickets/entities/ticket.entity';
 export class Plane {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')
-  @Field()
+  @Field(type => ID)
   id: string;
 
   @Column()

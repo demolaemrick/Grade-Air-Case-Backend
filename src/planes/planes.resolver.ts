@@ -3,7 +3,7 @@ import {
   Query,
   Mutation,
   Args,
-  Int,
+  ID,
   Parent,
   ResolveField,
 } from '@nestjs/graphql';
@@ -11,7 +11,7 @@ import { PlanesService } from './planes.service';
 import { Plane } from './entities/plane.entity';
 import { CreatePlaneInput } from './dto/create-plane.input';
 import { UpdatePlaneInput } from './dto/update-plane.input';
-import {Ticket} from "src/tickets/entities/ticket.entity"
+import {Ticket} from "../tickets/entities/ticket.entity"
 
 @Resolver(() => Plane)
 export class PlanesResolver {
@@ -31,7 +31,7 @@ export class PlanesResolver {
 
   //   GET PLANE BY ID
   @Query(() => Plane, { name: 'plane' })
-  findOne(@Args('id', { type: () => String }) id: string) {
+  findOne(@Args('id', { type: () => ID }) id: string) {
     return this.planesService.findOne(id);
   }
 
@@ -48,7 +48,7 @@ export class PlanesResolver {
 
   //   DELETE PLANE
   @Mutation(() => Plane)
-  removePlane(@Args('id', { type: () => String }) id: string) {
+  removePlane(@Args('id', { type: () => ID }) id: string) {
     return this.planesService.remove(id);
   }
 }

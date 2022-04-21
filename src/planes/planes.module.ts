@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlanesService } from './planes.service';
 import { PlanesResolver } from './planes.resolver';
 import {Plane} from "./entities/plane.entity"
-import { TicketsModule } from 'src/tickets/tickets.module';
+import { TicketsModule } from '../tickets/tickets.module';
 import {DateScalar} from "./planes.scalar"
 
 @Module({
